@@ -1,290 +1,271 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CIT 120: Computational Thinking Syllabus</title>
-    <style>
-        :root {
-            --skyctc-blue: #003366;
-            --skyctc-gold: #FFB81C;
-            --light-bg: #f4f4f4;
-            --text-dark: #333;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-            margin: 0;
-            display: flex;
-        }
-
-        /* Navigation Sidebar */
-        nav {
-            width: 250px;
-            background-color: var(--skyctc-blue);
-            height: 100vh;
-            position: fixed;
-            color: white;
-            padding-top: 20px;
-            overflow-y: auto;
-        }
-
-        nav h2 {
-            text-align: center;
-            font-size: 1.2rem;
-            color: var(--skyctc-gold);
-            padding: 0 10px;
-        }
-
-        nav ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        nav ul li a {
-            display: block;
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            transition: 0.3s;
-        }
-
-        nav ul li a:hover {
-            background-color: var(--skyctc-gold);
-            color: var(--skyctc-blue);
-        }
-
-        /* Main Content Area */
-        main {
-            margin-left: 250px;
-            padding: 40px;
-            width: 100%;
-            background-color: white;
-        }
-
-        header {
-            border-bottom: 4px solid var(--skyctc-gold);
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        .header-text h1 { color: var(--skyctc-blue); margin-top: 0; }
-        h2 { color: var(--skyctc-blue); border-left: 5px solid var(--skyctc-gold); padding-left: 10px; margin-top: 40px;}
-
-        /* Print Button Style */
-        .print-btn {
-            background-color: var(--skyctc-blue);
-            color: white;
-            border: 2px solid var(--skyctc-gold);
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        .print-btn:hover {
-            background-color: var(--skyctc-gold);
-            color: var(--skyctc-blue);
-        }
-
-        .card {
-            background: var(--light-bg);
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border-top: 3px solid var(--skyctc-blue);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-
-        th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        th {
-            background-color: var(--skyctc-blue);
-            color: white;
-        }
-
-        tr:nth-child(even) { background-color: #f9f9f9; }
-
-        .important-note {
-            background-color: #fff3cd;
-            border: 1px solid #ffeeba;
-            padding: 15px;
-            border-radius: 5px;
-            color: #856404;
-            font-weight: bold;
-        }
-
-        /* PRINT STYLES */
-        @media print {
-            nav, .print-btn { display: none !important; }
-            main { margin-left: 0; padding: 0; }
-            body { display: block; }
-            .card { border: 1px solid #ccc; background: none; }
-            h2 { border-left: 5px solid #000; }
-        }
-
-        @media (max-width: 768px) {
-            nav { width: 100%; height: auto; position: relative; }
-            body { flex-direction: column; }
-            main { margin-left: 0; padding: 20px; }
-            header { flex-direction: column; }
-            .print-btn { margin-top: 15px; width: 100%; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIT 120: Computational Thinking Syllabus</title>
+  <style>
+    :root {
+      --skyctc-blue: #003366;
+      --skyctc-gold: #FFB81C;
+      --light-bg: #f4f4f4;
+      --text-dark: #333;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text-dark);
+      margin: 0;
+      display: flex;
+    }
+    /* Navigation Sidebar */
+    nav {
+      width: 250px;
+      background-color: var(--skyctc-blue);
+      height: 100vh;
+      position: fixed;
+      color: white;
+      padding-top: 20px;
+      overflow-y: auto;
+    }
+    nav h2 {
+      text-align: center;
+      font-size: 1.2rem;
+      color: var(--skyctc-gold);
+      padding: 0 10px;
+    }
+    nav ul { list-style: none; padding: 0; }
+    nav ul li a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      transition: 0.3s;
+    }
+    nav ul li a:hover {
+      background-color: var(--skyctc-gold);
+      color: var(--skyctc-blue);
+    }
+    /* Main Content Area */
+    main {
+      margin-left: 250px;
+      padding: 40px;
+      width: 100%;
+      background-color: white;
+    }
+    header {
+      border-bottom: 4px solid var(--skyctc-gold);
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .header-text h1 { color: var(--skyctc-blue); margin-top: 0; }
+    h2 { color: var(--skyctc-blue); border-left: 5px solid var(--skyctc-gold); padding-left: 10px; margin-top: 40px;}
+    /* Print Button Style */
+    .print-btn {
+      background-color: var(--skyctc-blue);
+      color: white;
+      border: 2px solid var(--skyctc-gold);
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .print-btn:hover {
+      background-color: var(--skyctc-gold);
+      color: var(--skyctc-blue);
+    }
+    .card {
+      background: var(--light-bg);
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border-top: 3px solid var(--skyctc-blue);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background-color: var(--skyctc-blue);
+      color: white;
+    }
+    tr:nth-child(even) { background-color: #f9f9f9; }
+    .important-note {
+      background-color: #fff3cd;
+      border: 1px solid #ffeeba;
+      padding: 15px;
+      border-radius: 5px;
+      color: #856404;
+      font-weight: bold;
+    }
+    /* PRINT STYLES */
+    @media print {
+      nav, .print-btn { display: none !important; }
+      main { margin-left: 0; padding: 0; }
+      body { display: block; }
+      .card { border: 1px solid #ccc; background: none; }
+      h2 { border-left: 5px solid #000; }
+    }
+    @media (max-width: 768px) {
+      nav { width: 100%; height: auto; position: relative; }
+      body { flex-direction: column; }
+      main { margin-left: 0; padding: 20px; }
+      header { flex-direction: column; }
+      .print-btn { margin-top: 15px; width: 100%; }
+    }
+  </style>
 </head>
 <body>
-
-<nav>
+  <nav>
     <h2>CIT 120 Syllabus</h2>
     <ul>
-        <li><a href="#info">Instructor Info</a></li>
-        <li><a href="#description">Course Description</a></li>
-        <li><a href="#materials">Materials</a></li>
-        <li><a href="#competencies">Competencies</a></li>
-        <li><a href="#ethics">Ethics & Attendance</a></li>
-        <li><a href="#grading">Grading Scale</a></li>
-        <li><a href="#schedule">Weekly Schedule</a></li>
-        <li><a href="#policies">AI & Policies</a></li>
+      <li><a href="#info">Instructor Info</a></li>
+      <li><a href="#description">Course Description</a></li>
+      <li><a href="#materials">Materials</a></li>
+      <li><a href="#competencies">Competencies</a></li>
+      <li><a href="#ethics">Ethics & Attendance</a></li>
+      <li><a href="#grading">Grading Scale</a></li>
+      <li><a href="#schedule">Weekly Schedule</a></li>
+      <li><a href="#policies">AI & Policies</a></li>
     </ul>
-</nav>
-
-<main>
+  </nav>
+  <main>
     <header>
-        <div class="header-text">
-            [cite_start]<h1>CIT 120: Computational Thinking [cite: 1]</h1>
-            [cite_start]<p><strong>Semester:</strong> Spring 2026 [cite: 4] | [cite_start]<strong>Credits:</strong> 3 [cite: 5] | [cite_start]<strong>PeopleSoft:</strong> 49388 [cite: 3]</p>
-        </div>
-        <button class="print-btn" onclick="window.print()">Print to PDF</button>
+      <div class="header-text">
+        <h1>CIT 120: Computational Thinking</h1>
+        <p>
+          <strong>Semester:</strong> Spring 2026
+          &nbsp; <strong>Credits:</strong> 3
+          &nbsp; <strong>PeopleSoft:</strong> 49388
+        </p>
+      </div>
+      <button class="print-btn" onclick="window.print()">Print to PDF</button>
     </header>
 
     <section id="info">
-        <h2>Instructor Information</h2>
-        <div class="card">
-            [cite_start]<p><strong>Instructor:</strong> Phillip D. Woosley [cite: 7]</p>
-            [cite_start]<p><strong>Preferred Contact:</strong> Blackboard Messenger [cite: 14]</p>
-            [cite_start]<p><strong>Email:</strong> phillip.woosley@kctcs.edu [cite: 9]</p>
-            <p><strong>Office:</strong> Main Campus, Bldg. [cite_start]A, Room 172 [cite: 11]</p>
-            [cite_start]<h3>Office Hours [cite: 12]</h3>
-            <ul>
-                [cite_start]<li>Mon/Tue: 8:30am – 10:30am, 1:00pm – 2:30pm [cite: 13]</li>
-                [cite_start]<li>Wed: 8:30am – 10:30am, 1:30pm – 2:30pm [cite: 13]</li>
-                [cite_start]<li>Thu: 8:30am – 12:00pm, 1:00pm – 2:30pm [cite: 13]</li>
-                [cite_start]<li>Fri: 8:30am – 11:00pm (Virtual) [cite: 13]</li>
-            </ul>
-        </div>
+      <h2>Instructor Information</h2>
+      <div class="card">
+        <p><strong>Instructor:</strong> Phillip D. Woosley</p>
+        <p><strong>Preferred Contact:</strong> Blackboard Messenger</p>
+        <p><strong>Email:</strong> phillip.woosley@kctcs.edu</p>
+        <p><strong>Office:</strong> Main Campus, Bldg. A, Room 172</p>
+        <h3>Office Hours</h3>
+        <ul>
+          <li>Mon/Tue: 8:30am – 10:30am, 1:00pm – 2:30pm</li>
+          <li>Wed: 8:30am – 10:30am, 1:30pm – 2:30pm</li>
+          <li>Thu: 8:30am – 12:00pm, 1:00pm – 2:30pm</li>
+          <li>Fri: 8:30am – 11:00pm (Virtual)</li>
+        </ul>
+      </div>
     </section>
 
     <section id="description">
-        <h2>Course Description & Structure</h2>
-        [cite_start]<p>This course promotes understanding of computer programming and logic by teaching students to “think like a computer.” [cite: 19] [cite_start]It covers variables, control/data structures, and principles of command-line and object-oriented languages. [cite: 21]</p>
-        [cite_start]<p><strong>Format:</strong> Lecture and Labs [cite: 18]</p>
+      <h2>Course Description & Structure</h2>
+      <p>This course promotes understanding of computer programming and logic by teaching students to “think like a computer.” It covers variables, control/data structures, and principles of command-line and object-oriented languages.</p>
+      <p><strong>Format:</strong> Lecture and Labs</p>
     </section>
 
     <section id="materials">
-        <h2>Required Materials</h2>
-        <div class="card">
-            [cite_start]<p><strong>Textbook:</strong> <em>Programming Logic and Design</em>, 10th Edition by Joyce Farrell [cite: 34, 35]</p>
-            [cite_start]<p><strong>Access:</strong> The textbook is available electronically in the Blackboard Course Shell. [cite: 30] [cite_start]Students are charged a fee on their tuition bill for program access. [cite: 31]</p>
-        </div>
+      <h2>Required Materials</h2>
+      <div class="card">
+        <p><strong>Textbook:</strong> <em>Programming Logic and Design</em>, 10th Edition by Joyce Farrell</p>
+        <p><strong>Access:</strong> The textbook is available electronically in the Blackboard Course Shell. Students are charged a fee on their tuition bill for program access.</p>
+      </div>
     </section>
 
     <section id="ethics">
-        <h2>Workplace Ethics & Attendance</h2>
-        [cite_start]<div class="important-note">For this course, no more than 3 days may be missed. [cite: 72]</div>
-        <ul>
-            [cite_start]<li>If a student is absent for more than 15% of scheduled class sessions, the student will be withdrawn. [cite: 71]</li>
-            [cite_start]<li>Faculty do not differentiate between “excused” and “un-excused” absences. [cite: 71]</li>
-            [cite_start]<li>Before mid-point: Student is withdrawn and a "W" is issued. [cite: 73]</li>
-            [cite_start]<li>After mid-point: Student is issued a failing grade "E". [cite: 74]</li>
-        </ul>
+      <h2>Workplace Ethics & Attendance</h2>
+      <div class="important-note">For this course, no more than 3 days may be missed.</div>
+      <ul>
+        <li>If a student is absent for more than 15% of scheduled class sessions, the student will be withdrawn.</li>
+        <li>Faculty do not differentiate between “excused” and “un-excused” absences.</li>
+        <li>Before mid-point: Student is withdrawn and a "W" is issued.</li>
+        <li>After mid-point: Student is issued a failing grade "E".</li>
+      </ul>
     </section>
 
     <section id="grading">
-        <h2>Grading</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Category</th>
-                    <th>Points</th>
-                    <th>Weight</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Surveys & Syllabus Acknowledgement</td>
-                    <td>30</td>
-                    [cite_start]<td>5% [cite: 154]</td>
-                </tr>
-                <tr>
-                    <td>Reading Assignments</td>
-                    <td>175</td>
-                    [cite_start]<td>32% [cite: 154]</td>
-                </tr>
-                <tr>
-                    <td>Labs (Programming Assignments)</td>
-                    <td>350</td>
-                    [cite_start]<td>63% [cite: 154]</td>
-                </tr>
-                <tr>
-                    <td><strong>Total</strong></td>
-                    <td><strong>555</strong></td>
-                    <td><strong>100%</strong></td>
-                </tr>
-            </tbody>
-        </table>
-        [cite_start]<p><strong>Grading Scale:</strong> A (90-100%), B (80-89%), C (70-79%), D (60-69%), E (0-59%) [cite: 148-152]</p>
+      <h2>Grading</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Points</th>
+            <th>Weight</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Surveys & Syllabus Acknowledgement</td>
+            <td>30</td>
+            <td>5%</td>
+          </tr>
+          <tr>
+            <td>Reading Assignments</td>
+            <td>175</td>
+            <td>32%</td>
+          </tr>
+          <tr>
+            <td>Labs (Programming Assignments)</td>
+            <td>350</td>
+            <td>63%</td>
+          </tr>
+          <tr>
+            <td><strong>Total</strong></td>
+            <td><strong>555</strong></td>
+            <td><strong>100%</strong></td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>Grading Scale:</strong> A (90–100%), B (80–89%), C (70–79%), D (60–69%), E (0–59%)</p>
     </section>
 
     <section id="schedule">
-        <h2>Weekly Schedule</h2>
-        [cite_start]<p>Weeks start on Monday and end on Sunday at midnight (11:59 pm). [cite: 162]</p>
-        <table>
-            <thead>
-                <tr>
-                    <th>Week</th>
-                    <th>Assignment(s)</th>
-                    <th>Due Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>1 (Jan 12-18)</td><td>Syllabus Ack. [cite_start]/ Experience Survey [cite: 164][cite_start]</td><td>1/18/26 [cite: 164]</td></tr>
-                [cite_start]<tr><td>3 (Jan 26-Feb 1)</td><td>Lab 1 – Using Replit [cite: 164][cite_start]</td><td>2/1/26 [cite: 164]</td></tr>
-                [cite_start]<tr><td>5 (Feb 9-15)</td><td>Lab 2 – Input and Output [cite: 164][cite_start]</td><td>2/15/26 [cite: 164]</td></tr>
-                [cite_start]<tr><td>8 (Mar 2-8)</td><td>Reading 4 / Mid-Point Survey [cite: 164][cite_start]</td><td>3/8/26 [cite: 164]</td></tr>
-                [cite_start]<tr><td colspan="3" style="text-align:center; background:#eee;"><strong>Mar 9-15: Spring Break (N/A) [cite: 164]</strong></td></tr>
-                [cite_start]<tr><td>15 (Apr 27-May 3)</td><td>Lab 7 – Create and Use a Class [cite: 164][cite_start]</td><td>5/3/26 [cite: 164]</td></tr>
-                [cite_start]<tr><td>Finals (May 4-10)</td><td>End Survey [cite: 164][cite_start]</td><td>5/10/26 [cite: 164]</td></tr>
-            </tbody>
-        </table>
+      <h2>Weekly Schedule</h2>
+      <p>Weeks start on Monday and end on Sunday at midnight (11:59 pm).</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Week</th>
+            <th>Assignment(s)</th>
+            <th>Due Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1 (Jan 12–18)</td><td>Syllabus Ack. / Experience Survey</td><td>1/18/26</td></tr>
+          <tr><td>3 (Jan 26–Feb 1)</td><td>Lab 1 – Using Replit</td><td>2/1/26</td></tr>
+          <tr><td>5 (Feb 9–15)</td><td>Lab 2 – Input and Output</td><td>2/15/26</td></tr>
+          <tr><td>8 (Mar 2–8)</td><td>Reading 4 / Mid-Point Survey</td><td>3/8/26</td></tr>
+          <tr><td colspan="3" style="text-align:center; background:#eee;"><strong>Mar 9–15: Spring Break (N/A)</strong></td></tr>
+          <tr><td>15 (Apr 27–May 3)</td><td>Lab 7 – Create and Use a Class</td><td>5/3/26</td></tr>
+          <tr><td>Finals (May 4–10)</td><td>End Survey</td><td>5/10/26</td></tr>
+        </tbody>
+      </table>
     </section>
 
     <section id="policies">
-        <h2>Course Policies</h2>
-        <div class="card">
-            <h3>AI Usage</h3>
-            [cite_start]<p>You are allowed to use AI for crafting your submissions. [cite: 135] [cite_start]When AI plays a major role, such as generating content or formulating responses, you must document its involvement. [cite: 138]</p>
-            <h3>Late Work</h3>
-            [cite_start]<p>Late work may be accepted with a penalty in rare circumstances with instructor approval. [cite: 174] [cite_start]However, if grading has already begun or answers/feedback have been posted, the window for submission has closed. [cite: 175]</p>
-            <h3>Proctored Exam</h3>
-            [cite_start]<p>This course does NOT require a proctored exam. [cite: 156]</p>
-        </div>
-    </section>
-</main>
+      <h2>Course Policies</h2>
+      <div class="card">
+        <h3>AI Usage</h3>
+        <p>You are allowed to use AI for crafting your submissions. When AI plays a major role, such as generating content or formulating responses, you must document its involvement.</p>
 
+        <h3>Late Work</h3>
+        <p>Late work may be accepted with a penalty in rare circumstances with instructor approval. However, if grading has already begun or answers/feedback have been posted, the window for submission has closed.</p>
+
+        <h3>Proctored Exam</h3>
+        <p>This course does NOT require a proctored exam.</p>
+      </div>
+    </section>
+  </main>
 </body>
 </html>
