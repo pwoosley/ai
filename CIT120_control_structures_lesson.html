@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIT 120: The Three Control Structures</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: #2c3e50;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            color: white;
+            padding: 20px 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        nav button:hover {
+            background: #34495e;
+        }
+
+        nav button.active {
+            background: #34495e;
+            border-bottom: 3px solid #3498db;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+        }
+
+        h3 {
+            color: #34495e;
+            font-size: 1.5em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .learning-objective {
+            background: #e8f4f8;
+            border-left: 5px solid #3498db;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .learning-objective h3 {
+            margin-top: 0;
+            color: #2980b9;
+        }
+
+        .structure-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .structure-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .structure-card h3 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+
+        .code-example {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+            line-height: 1.5;
+        }
+
+        .code-example .keyword {
+            color: #c678dd;
+            font-weight: bold;
+        }
+
+        .code-example .string {
+            color: #98c379;
+        }
+
+        .code-example .comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .code-example .function {
+            color: #61afef;
+        }
+
+        .code-example .number {
+            color: #d19a66;
+        }
+
+        .code-example .line-number,
+        .code-panel .line-number {
+            color: #5c6370;
+            display: inline-block;
+            width: 30px;
+            text-align: right;
+            margin-right: 15px;
+            user-select: none;
+            opacity: 0.6;
+        }
+
+        .code-line {
+            display: block;
+            white-space: pre;
+        }
+
+        .interactive-demo {
+            background: #fff;
+            border: 3px solid #3498db;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .interactive-demo h4 {
+            color: #2980b9;
+            margin-bottom: 15px;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .demo-controls input,
+        .demo-controls select,
+        .demo-controls button {
+            padding: 12px 20px;
+            font-size: 1em;
+            border-radius: 8px;
+            border: 2px solid #3498db;
+        }
+
+        .demo-controls button {
+            background: #3498db;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .demo-controls button:hover {
+            background: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .demo-output {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            min-height: 100px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            border-left: 5px solid #3498db;
+        }
+
+        .quiz-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .quiz-question {
+            margin-bottom: 30px;
+        }
+
+        .quiz-question h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-option:hover {
+            border-color: #3498db;
+            background: #e8f4f8;
+        }
+
+        .quiz-option.selected {
+            border-color: #3498db;
+            background: #d4e6f1;
+        }
+
+        .quiz-option.correct {
+            border-color: #27ae60;
+            background: #d5f4e6;
+        }
+
+        .quiz-option.incorrect {
+            border-color: #e74c3c;
+            background: #fadbd8;
+        }
+
+        .submit-quiz {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .submit-quiz:hover {
+            background: #229954;
+            transform: scale(1.05);
+        }
+
+        .quiz-feedback {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .quiz-feedback.correct {
+            background: #d5f4e6;
+            color: #27ae60;
+            border-left: 5px solid #27ae60;
+        }
+
+        .quiz-feedback.incorrect {
+            background: #fadbd8;
+            color: #e74c3c;
+            border-left: 5px solid #e74c3c;
+        }
+
+        .flowchart {
+            background: white;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .flowchart-box {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            border: 2px solid #2c3e50;
+            border-radius: 8px;
+            background: #ecf0f1;
+        }
+
+        .flowchart-diamond {
+            display: inline-block;
+            padding: 20px;
+            margin: 10px;
+            border: 2px solid #e74c3c;
+            background: #fadbd8;
+            transform: rotate(45deg);
+            width: 120px;
+            height: 120px;
+            position: relative;
+        }
+
+        .flowchart-diamond span {
+            transform: rotate(-45deg);
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            width: 100px;
+        }
+
+        .flowchart-arrow {
+            font-size: 2em;
+            color: #3498db;
+            margin: 0 10px;
+        }
+
+        .highlight-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .key-point {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        .code-visualizer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .code-panel {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+        }
+
+        .code-panel .keyword {
+            color: #c678dd;
+            font-weight: bold;
+        }
+
+        .code-panel .string {
+            color: #98c379;
+        }
+
+        .code-panel .comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .code-panel .function {
+            color: #61afef;
+        }
+
+        .code-panel .number {
+            color: #d19a66;
+        }
+
+        .execution-panel {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #3498db;
+        }
+
+        .execution-step {
+            padding: 10px;
+            margin: 5px 0;
+            background: white;
+            border-left: 4px solid #3498db;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .execution-step.active {
+            background: #d4e6f1;
+            transform: translateX(10px);
+        }
+
+        @media (max-width: 768px) {
+            .code-visualizer {
+                grid-template-columns: 1fr;
+            }
+            
+            nav button {
+                padding: 15px 20px;
+                font-size: 1em;
+            }
+            
+            header h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎓 CIT 120: The Three Control Structures</h1>
+            <p>Understanding the Foundation of All Programming</p>
+        </header>
+
+        <nav>
+            <button class="nav-btn active" data-section="introduction">Introduction</button>
+            <button class="nav-btn" data-section="theory">The Böhm-Jacopini Theorem</button>
+            <button class="nav-btn" data-section="sequence">Sequence</button>
+            <button class="nav-btn" data-section="selection">Selection</button>
+            <button class="nav-btn" data-section="iteration">Iteration</button>
+            <button class="nav-btn" data-section="examples">Real Examples</button>
+            <button class="nav-btn" data-section="quiz">Quiz</button>
+        </nav>
+
+        <div class="content">
+            <!-- Introduction Section -->
+            <div class="section active" id="introduction">
+                <h2>Welcome to Control Structures</h2>
+                
+                <div class="learning-objective">
+                    <h3>📚 Learning Objectives</h3>
+                    <ul>
+                        <li>Understand the three fundamental control structures in programming</li>
+                        <li>Learn how the Böhm-Jacopini Theorem proves all code uses these structures</li>
+                        <li>Identify and implement sequence, selection, and iteration in code</li>
+                        <li>Analyze real-world programs to identify control structures</li>
+                    </ul>
+                </div>
+
+                <p>Every computer program, from the simplest "Hello World" to complex artificial intelligence systems, is built using just three fundamental building blocks called <strong>control structures</strong>. Think of them as the LEGO blocks of programming—no matter how elaborate the creation, it's always made from these three basic pieces.</p>
+
+                <h3>What Are Control Structures?</h3>
+                <p>Control structures determine the <strong>flow of execution</strong> in a program. They answer the question: "What instruction should the computer execute next?" Without control structures, a computer would be limited to executing a fixed sequence of instructions with no ability to make decisions or repeat actions.</p>
+
+                <div class="structure-card">
+                    <h3>🎯 The Three Control Structures</h3>
+                    <ol>
+                        <li><strong>Sequence</strong> - Execute instructions one after another (Do this, then that, then the other)</li>
+                        <li><strong>Selection</strong> - Choose between different paths based on conditions (If this, then do that, otherwise do something else)</li>
+                        <li><strong>Iteration</strong> - Repeat instructions while a condition is true (Keep doing this until...)</li>
+                    </ol>
+                </div>
+
+                <div class="key-point">
+                    <strong>🔑 Key Point:</strong> These three structures are mathematically proven to be sufficient for implementing ANY algorithm. This is known as the Böhm-Jacopini Theorem (1966).
+                </div>
+
+                <h3>Why Is This Important?</h3>
+                <p>Understanding control structures is crucial because:</p>
+                <ul>
+                    <li>They form the theoretical foundation of all programming languages</li>
+                    <li>They enable you to analyze and understand any code you encounter</li>
+                    <li>They provide a systematic approach to problem-solving</li>
+                    <li>They help you write clear, maintainable, and efficient code</li>
+                </ul>
+            </div>
+
+            <!-- Theory Section -->
+            <div class="section" id="theory">
+                <h2>The Böhm-Jacopini Theorem</h2>
+                
+                <div class="highlight-box">
+                    <h3>📜 Historical Context</h3>
+                    <p>In 1966, Italian computer scientists <strong>Corrado Böhm</strong> and <strong>Giuseppe Jacopini</strong> published a groundbreaking paper that mathematically proved something remarkable: <em>any computable function can be implemented using only three control structures</em>.</p>
+                </div>
+
+                <h3>What Does This Mean?</h3>
+                <p>Before this theorem, programmers often used <code>GOTO</code> statements, which created tangled, hard-to-understand code (nicknamed "spaghetti code"). The Böhm-Jacopini Theorem proved that these chaotic jumps were unnecessary—every program could be written in a clear, structured way using only sequence, selection, and iteration.</p>
+
+                <div class="structure-card">
+                    <h3>The Theorem Formally States:</h3>
+                    <p>Any program that can be represented as a flowchart can be equivalently expressed using:</p>
+                    <ol>
+                        <li><strong>Composition (Sequence)</strong> - Combining subprograms in order</li>
+                        <li><strong>Alternation (Selection)</strong> - Choosing between subprograms based on a condition</li>
+                        <li><strong>Iteration (Repetition)</strong> - Repeating a subprogram while a condition holds</li>
+                    </ol>
+                </div>
+
+                <h3>Impact on Programming</h3>
+                <div class="key-point">
+                    <strong>🎯 Real-World Impact:</strong> This theorem launched the "Structured Programming" movement, leading to clearer code, fewer bugs, and the development of modern programming languages like C, Java, Python, and JavaScript.
+                </div>
+
+                <p>The theorem doesn't just say these structures <em>can</em> be used—it proves they are <strong>sufficient</strong>. This means:</p>
+                <ul>
+                    <li>No additional control structures are theoretically necessary</li>
+                    <li>Any algorithm can be decomposed into these three patterns</li>
+                    <li>Every program you write, consciously or not, uses these structures</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>💡 Think About It:</strong> When you analyze any piece of code—whether it's Python, Java, C++, or JavaScript—you can always identify which of these three structures are being used at any given moment. There is no fourth option!
+                </div>
+            </div>
+
+            <!-- Sequence Section -->
+            <div class="section" id="sequence">
+                <h2>Control Structure 1: Sequence</h2>
+                
+                <p><strong>Sequence</strong> is the simplest and most fundamental control structure. It means executing instructions in order, one after another, from top to bottom.</p>
+
+                <div class="structure-card">
+                    <h3>Definition</h3>
+                    <p><strong>Sequence</strong> refers to the linear, step-by-step execution of statements. Each statement is executed exactly once, and the next statement begins only after the previous one completes.</p>
+                </div>
+
+                <h3>Characteristics of Sequence</h3>
+                <ul>
+                    <li>Default mode of execution in all programs</li>
+                    <li>No decisions or jumps involved</li>
+                    <li>Predictable and deterministic</li>
+                    <li>Forms the backbone of every program</li>
+                </ul>
+
+                <h3>Visual Representation</h3>
+                <div class="flowchart">
+                    <div class="flowchart-box">Step 1: Start</div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="flowchart-box">Step 2: First Action</div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="flowchart-box">Step 3: Second Action</div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="flowchart-box">Step 4: Third Action</div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="flowchart-box">Step 5: End</div>
+                </div>
+
+                <h3>Code Examples</h3>
+                
+                <h4>Python Example:</h4>
+                <div class="code-example">
+<span class="comment"># Sequence: Making a sandwich</span>
+<span class="function">print</span>(<span class="string">"Step 1: Get two slices of bread"</span>)
+<span class="function">print</span>(<span class="string">"Step 2: Add peanut butter to one slice"</span>)
+<span class="function">print</span>(<span class="string">"Step 3: Add jelly to the other slice"</span>)
+<span class="function">print</span>(<span class="string">"Step 4: Press slices together"</span>)
+<span class="function">print</span>(<span class="string">"Step 5: Enjoy your sandwich!"</span>)
+                </div>
+
+                <h4>JavaScript Example:</h4>
+                <div class="code-example">
+<span class="comment">// Sequence: Calculating total price</span>
+<span class="keyword">let</span> price = <span class="number">29.99</span>;
+<span class="keyword">let</span> tax = price * <span class="number">0.08</span>;
+<span class="keyword">let</span> shipping = <span class="number">5.00</span>;
+<span class="keyword">let</span> total = price + tax + shipping;
+console.<span class="function">log</span>(<span class="string">"Total: $"</span> + total.<span class="function">toFixed</span>(<span class="number">2</span>));
+                </div>
+
+                <div class="interactive-demo">
+                    <h4>🎮 Interactive Demo: Sequence</h4>
+                    <p>Enter values and see how they're processed sequentially:</p>
+                    <div class="demo-controls">
+                        <input type="number" id="seq-num1" placeholder="First number" value="10">
+                        <input type="number" id="seq-num2" placeholder="Second number" value="5">
+                        <button onclick="runSequenceDemo()">Execute Sequence</button>
+                    </div>
+                    <div class="demo-output" id="sequence-output">Click "Execute Sequence" to see step-by-step execution...</div>
+                </div>
+
+                <div class="key-point">
+                    <strong>🔑 Remember:</strong> Every program contains sequence! Even programs with complex logic execute individual statements sequentially between decision points and loops.
+                </div>
+            </div>
+
+            <!-- Selection Section -->
+            <div class="section" id="selection">
+                <h2>Control Structure 2: Selection</h2>
+                
+                <p><strong>Selection</strong> (also called branching or decision-making) allows a program to choose between different paths of execution based on whether a condition is true or false.</p>
+
+                <div class="structure-card">
+                    <h3>Definition</h3>
+                    <p><strong>Selection</strong> evaluates a boolean condition and executes different blocks of code depending on whether the condition is true or false. This is the foundation of decision-making in programming.</p>
+                </div>
+
+                <h3>Types of Selection</h3>
+                <ul>
+                    <li><strong>if</strong> - Execute code only if condition is true</li>
+                    <li><strong>if-else</strong> - Choose between two alternatives</li>
+                    <li><strong>if-elif-else</strong> - Choose among multiple alternatives</li>
+                    <li><strong>switch/case</strong> - Select from many options (in some languages)</li>
+                </ul>
+
+                <h3>Visual Representation</h3>
+                <div class="flowchart">
+                    <div class="flowchart-box">Start</div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div style="display: inline-block;">
+                        <div class="flowchart-diamond"><span>Condition?</span></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-around; margin: 20px 0;">
+                        <div>
+                            <div style="color: #27ae60; font-weight: bold;">TRUE ➜</div>
+                            <div class="flowchart-box">Action A</div>
+                        </div>
+                        <div>
+                            <div style="color: #e74c3c; font-weight: bold;">FALSE ➜</div>
+                            <div class="flowchart-box">Action B</div>
+                        </div>
+                    </div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="flowchart-box">Continue</div>
+                </div>
+
+                <h3>Code Examples</h3>
+                
+                <h4>Python Example:</h4>
+                <div class="code-example">
+<span class="comment"># Selection: Determining grade from score</span>
+score = <span class="number">85</span>
+
+<span class="keyword">if</span> score >= <span class="number">90</span>:
+    <span class="function">print</span>(<span class="string">"Grade: A"</span>)
+<span class="keyword">elif</span> score >= <span class="number">80</span>:
+    <span class="function">print</span>(<span class="string">"Grade: B"</span>)
+<span class="keyword">elif</span> score >= <span class="number">70</span>:
+    <span class="function">print</span>(<span class="string">"Grade: C"</span>)
+<span class="keyword">elif</span> score >= <span class="number">60</span>:
+    <span class="function">print</span>(<span class="string">"Grade: D"</span>)
+<span class="keyword">else</span>:
+    <span class="function">print</span>(<span class="string">"Grade: F"</span>)
+                </div>
+
+                <h4>JavaScript Example:</h4>
+                <div class="code-example">
+<span class="comment">// Selection: Determining if user can vote</span>
+<span class="keyword">let</span> age = <span class="number">20</span>;
+
+<span class="keyword">if</span> (age >= <span class="number">18</span>) {
+    console.<span class="function">log</span>(<span class="string">"You are eligible to vote!"</span>);
+} <span class="keyword">else</span> {
+    <span class="keyword">let</span> yearsUntil = <span class="number">18</span> - age;
+    console.<span class="function">log</span>(<span class="string">"You can vote in "</span> + yearsUntil + <span class="string">" years."</span>);
+}
+                </div>
+
+                <div class="interactive-demo">
+                    <h4>🎮 Interactive Demo: Selection</h4>
+                    <p>Enter your age and see the selection in action:</p>
+                    <div class="demo-controls">
+                        <input type="number" id="age-input" placeholder="Enter your age" value="20" min="0" max="120">
+                        <button onclick="runSelectionDemo()">Check Eligibility</button>
+                    </div>
+                    <div class="demo-output" id="selection-output">Click "Check Eligibility" to see the result...</div>
+                </div>
+
+                <div class="key-point">
+                    <strong>🔑 Remember:</strong> Selection is based on boolean logic (true/false). The condition can be simple (x > 5) or complex (x > 5 AND y < 10), but it always evaluates to true or false.
+                </div>
+            </div>
+
+            <!-- Iteration Section -->
+            <div class="section" id="iteration">
+                <h2>Control Structure 3: Iteration</h2>
+                
+                <p><strong>Iteration</strong> (also called looping or repetition) allows a program to execute a block of code multiple times until a condition is no longer true.</p>
+
+                <div class="structure-card">
+                    <h3>Definition</h3>
+                    <p><strong>Iteration</strong> repeats a sequence of statements as long as a specified condition remains true. This enables efficient processing of repetitive tasks without writing the same code multiple times.</p>
+                </div>
+
+                <h3>Types of Iteration</h3>
+                <ul>
+                    <li><strong>while loop</strong> - Repeat while condition is true (condition checked before each iteration)</li>
+                    <li><strong>do-while loop</strong> - Repeat until condition becomes false (executes at least once)</li>
+                    <li><strong>for loop</strong> - Repeat a specific number of times or iterate through a collection</li>
+                    <li><strong>foreach loop</strong> - Iterate through all elements in a collection</li>
+                </ul>
+
+                <h3>Visual Representation</h3>
+                <div class="flowchart">
+                    <div class="flowchart-box">Start</div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div style="display: inline-block;">
+                        <div class="flowchart-diamond"><span>Condition?</span></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-around; margin: 20px 0;">
+                        <div>
+                            <div style="color: #27ae60; font-weight: bold;">TRUE ➜</div>
+                            <div class="flowchart-box">Execute Loop Body</div>
+                            <div style="font-size: 2em; color: #3498db;">↰ Loop Back</div>
+                        </div>
+                        <div>
+                            <div style="color: #e74c3c; font-weight: bold;">FALSE ➜</div>
+                            <div class="flowchart-box">Exit Loop</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Code Examples</h3>
+                
+                <h4>Python Example:</h4>
+                <div class="code-example">
+<span class="comment"># Iteration: Counting down from 10</span>
+count = <span class="number">10</span>
+
+<span class="keyword">while</span> count > <span class="number">0</span>:
+    <span class="function">print</span>(count)
+    count = count - <span class="number">1</span>
+
+<span class="function">print</span>(<span class="string">"Blastoff!"</span>)
+
+<span class="comment"># For loop: Calculating sum of numbers 1-5</span>
+total = <span class="number">0</span>
+<span class="keyword">for</span> i <span class="keyword">in</span> <span class="function">range</span>(<span class="number">1</span>, <span class="number">6</span>):
+    total = total + i
+<span class="function">print</span>(<span class="string">f"Sum: {total}"</span>)
+                </div>
+
+                <h4>JavaScript Example:</h4>
+                <div class="code-example">
+<span class="comment">// Iteration: Printing multiplication table</span>
+<span class="keyword">let</span> number = <span class="number">7</span>;
+
+<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i <= <span class="number">10</span>; i++) {
+    <span class="keyword">let</span> result = number * i;
+    console.<span class="function">log</span>(<span class="string">`</span>${number} × ${i} = ${result}<span class="string">`</span>);
+}
+
+<span class="comment">// While loop: Finding first number divisible by 7 and 3</span>
+<span class="keyword">let</span> num = <span class="number">1</span>;
+<span class="keyword">while</span> (num % <span class="number">7</span> !== <span class="number">0</span> || num % <span class="number">3</span> !== <span class="number">0</span>) {
+    num++;
+}
+console.<span class="function">log</span>(<span class="string">"Found: "</span> + num);
+                </div>
+
+                <div class="interactive-demo">
+                    <h4>🎮 Interactive Demo: Iteration</h4>
+                    <p>See how a loop multiplies numbers from 1 to N:</p>
+                    <div class="demo-controls">
+                        <input type="number" id="loop-count" placeholder="How many iterations?" value="5" min="1" max="20">
+                        <button onclick="runIterationDemo()">Run Loop</button>
+                    </div>
+                    <div class="demo-output" id="iteration-output">Click "Run Loop" to see the iteration in action...</div>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>⚠️ Warning:</strong> Iteration requires a condition that will eventually become false. Without this, you create an "infinite loop" that runs forever and crashes your program!
+                </div>
+
+                <div class="key-point">
+                    <strong>🔑 Remember:</strong> Iteration is how computers handle repetitive tasks efficiently. Instead of writing the same code 100 times, you write it once and loop 100 times.
+                </div>
+            </div>
+
+            <!-- Examples Section -->
+            <div class="section" id="examples">
+                <h2>Real-World Code Analysis</h2>
+                
+                <p>Let's analyze complete programs to identify all three control structures in action. Every line of code uses at least one of these structures!</p>
+
+                <div class="structure-card">
+                    <h3>Example 1: Number Guessing Game</h3>
+                    <div class="code-visualizer">
+                        <div class="code-panel">
+<div class="code-line"><span class="line-number"> 1</span> <span class="comment"># Python Number Guessing Game</span></div>
+<div class="code-line"><span class="line-number"> 2</span> <span class="keyword">import</span> random</div>
+<div class="code-line"><span class="line-number"> 3</span> </div>
+<div class="code-line"><span class="line-number"> 4</span> <span class="comment"># SEQUENCE: Initial setup</span></div>
+<div class="code-line"><span class="line-number"> 5</span> secret = random.<span class="function">randint</span>(<span class="number">1</span>, <span class="number">100</span>)</div>
+<div class="code-line"><span class="line-number"> 6</span> attempts = <span class="number">0</span></div>
+<div class="code-line"><span class="line-number"> 7</span> max_attempts = <span class="number">7</span></div>
+<div class="code-line"><span class="line-number"> 8</span> </div>
+<div class="code-line"><span class="line-number"> 9</span> <span class="function">print</span>(<span class="string">"Guess a number between 1 and 100!"</span>)</div>
+<div class="code-line"><span class="line-number">10</span> </div>
+<div class="code-line"><span class="line-number">11</span> <span class="comment"># ITERATION: Keep playing until win or lose</span></div>
+<div class="code-line"><span class="line-number">12</span> <span class="keyword">while</span> attempts < max_attempts:</div>
+<div class="code-line"><span class="line-number">13</span>     guess = <span class="function">int</span>(<span class="function">input</span>(<span class="string">"Your guess: "</span>))</div>
+<div class="code-line"><span class="line-number">14</span>     attempts += <span class="number">1</span></div>
+<div class="code-line"><span class="line-number">15</span>     </div>
+<div class="code-line"><span class="line-number">16</span>     <span class="comment"># SELECTION: Check the guess</span></div>
+<div class="code-line"><span class="line-number">17</span>     <span class="keyword">if</span> guess == secret:</div>
+<div class="code-line"><span class="line-number">18</span>         <span class="function">print</span>(<span class="string">f"🎉 Correct! You won in {attempts} attempts!"</span>)</div>
+<div class="code-line"><span class="line-number">19</span>         <span class="keyword">break</span></div>
+<div class="code-line"><span class="line-number">20</span>     <span class="keyword">elif</span> guess < secret:</div>
+<div class="code-line"><span class="line-number">21</span>         <span class="function">print</span>(<span class="string">"Too low! Try higher."</span>)</div>
+<div class="code-line"><span class="line-number">22</span>     <span class="keyword">else</span>:</div>
+<div class="code-line"><span class="line-number">23</span>         <span class="function">print</span>(<span class="string">"Too high! Try lower."</span>)</div>
+<div class="code-line"><span class="line-number">24</span> </div>
+<div class="code-line"><span class="line-number">25</span> <span class="comment"># SELECTION: Check if player lost</span></div>
+<div class="code-line"><span class="line-number">26</span> <span class="keyword">if</span> attempts == max_attempts:</div>
+<div class="code-line"><span class="line-number">27</span>     <span class="function">print</span>(<span class="string">f"Game over! The number was {secret}"</span>)</div>
+                        </div>
+                        <div class="execution-panel">
+                            <h4>Control Structures Used:</h4>
+                            <div class="execution-step">
+                                <strong>SEQUENCE:</strong><br>
+                                Lines 1-5: Import, initialize variables, print welcome
+                            </div>
+                            <div class="execution-step">
+                                <strong>ITERATION:</strong><br>
+                                Lines 7-16: while loop repeats until max attempts or correct guess
+                            </div>
+                            <div class="execution-step">
+                                <strong>SELECTION:</strong><br>
+                                Lines 11-16: if-elif-else checks the guess
+                            </div>
+                            <div class="execution-step">
+                                <strong>SELECTION:</strong><br>
+                                Lines 18-19: if checks for game over condition
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="structure-card">
+                    <h3>Example 2: Shopping Cart Calculator</h3>
+                    <div class="code-example">
+<div class="code-line"><span class="line-number"> 1</span> <span class="comment">// JavaScript Shopping Cart</span></div>
+<div class="code-line"><span class="line-number"> 2</span> <span class="keyword">let</span> cart = [</div>
+<div class="code-line"><span class="line-number"> 3</span>     { item: <span class="string">"Laptop"</span>, price: <span class="number">999.99</span>, quantity: <span class="number">1</span> },</div>
+<div class="code-line"><span class="line-number"> 4</span>     { item: <span class="string">"Mouse"</span>, price: <span class="number">29.99</span>, quantity: <span class="number">2</span> },</div>
+<div class="code-line"><span class="line-number"> 5</span>     { item: <span class="string">"Keyboard"</span>, price: <span class="number">79.99</span>, quantity: <span class="number">1</span> }</div>
+<div class="code-line"><span class="line-number"> 6</span> ];</div>
+<div class="code-line"><span class="line-number"> 7</span> </div>
+<div class="code-line"><span class="line-number"> 8</span> <span class="comment">// SEQUENCE: Initialize variables</span></div>
+<div class="code-line"><span class="line-number"> 9</span> <span class="keyword">let</span> subtotal = <span class="number">0</span>;</div>
+<div class="code-line"><span class="line-number">10</span> </div>
+<div class="code-line"><span class="line-number">11</span> <span class="comment">// ITERATION: Process each item</span></div>
+<div class="code-line"><span class="line-number">12</span> <span class="keyword">for</span> (<span class="keyword">let</span> product <span class="keyword">of</span> cart) {</div>
+<div class="code-line"><span class="line-number">13</span>     <span class="keyword">let</span> itemTotal = product.price * product.quantity;</div>
+<div class="code-line"><span class="line-number">14</span>     subtotal += itemTotal;</div>
+<div class="code-line"><span class="line-number">15</span>     console.<span class="function">log</span>(<span class="string">`</span>${product.item}: $${itemTotal.toFixed(2)}<span class="string">`</span>);</div>
+<div class="code-line"><span class="line-number">16</span> }</div>
+<div class="code-line"><span class="line-number">17</span> </div>
+<div class="code-line"><span class="line-number">18</span> <span class="comment">// SELECTION: Calculate shipping based on total</span></div>
+<div class="code-line"><span class="line-number">19</span> <span class="keyword">let</span> shipping;</div>
+<div class="code-line"><span class="line-number">20</span> <span class="keyword">if</span> (subtotal >= <span class="number">100</span>) {</div>
+<div class="code-line"><span class="line-number">21</span>     shipping = <span class="number">0</span>;</div>
+<div class="code-line"><span class="line-number">22</span>     console.<span class="function">log</span>(<span class="string">"Free shipping!"</span>);</div>
+<div class="code-line"><span class="line-number">23</span> } <span class="keyword">else</span> {</div>
+<div class="code-line"><span class="line-number">24</span>     shipping = <span class="number">9.99</span>;</div>
+<div class="code-line"><span class="line-number">25</span>     console.<span class="function">log</span>(<span class="string">"Shipping: $9.99"</span>);</div>
+<div class="code-line"><span class="line-number">26</span> }</div>
+<div class="code-line"><span class="line-number">27</span> </div>
+<div class="code-line"><span class="line-number">28</span> <span class="comment">// SEQUENCE: Calculate and display final total</span></div>
+<div class="code-line"><span class="line-number">29</span> <span class="keyword">let</span> tax = subtotal * <span class="number">0.08</span>;</div>
+<div class="code-line"><span class="line-number">30</span> <span class="keyword">let</span> total = subtotal + tax + shipping;</div>
+<div class="code-line"><span class="line-number">31</span> console.<span class="function">log</span>(<span class="string">`Total: $</span>${total.toFixed(2)}<span class="string">`</span>);</div>
+                    </div>
+                    <div class="key-point">
+                        <strong>Analysis:</strong> This program uses all three structures! Sequence for initialization and final calculations, iteration (for loop) to process cart items, and selection (if-else) to determine shipping costs.
+                    </div>
+                </div>
+
+                <div class="interactive-demo">
+                    <h4>🎮 Interactive Code Analyzer</h4>
+                    <p>Click on a code snippet to see which control structures it uses:</p>
+                    <div class="demo-controls">
+                        <select id="code-select" onchange="analyzeCode()">
+                            <option value="">Select a code example...</option>
+                            <option value="example1">Print Hello World</option>
+                            <option value="example2">For loop summing numbers</option>
+                            <option value="example3">If-else for age check</option>
+                            <option value="example4">Complete program</option>
+                        </select>
+                    </div>
+                    <div class="demo-output" id="analyzer-output">Select an example above to analyze...</div>
+                </div>
+
+                <div class="highlight-box">
+                    <h3>🎯 Challenge: Identify the Structures</h3>
+                    <p>Look at any program you've written or seen. Can you identify:</p>
+                    <ul>
+                        <li>Which lines use <strong>sequence</strong>? (Most lines!)</li>
+                        <li>Where is <strong>selection</strong> used? (Look for if, else, switch)</li>
+                        <li>Where is <strong>iteration</strong> used? (Look for while, for, do-while)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Quiz Section -->
+            <div class="section" id="quiz">
+                <h2>Knowledge Check Quiz</h2>
+                
+                <p>Test your understanding of the three control structures!</p>
+
+                <div class="quiz-container">
+                    <div class="quiz-question">
+                        <h4>Question 1: What theorem proves that three control structures are sufficient for any program?</h4>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="selectOption(this, 1, 'A')">
+                                A) The Turing Theorem
+                            </div>
+                            <div class="quiz-option" onclick="selectOption(this, 1, 'B')">
+                                B) The Böhm-Jacopini Theorem
+                            </div>
+                            <div class="quiz-option" onclick="selectOption(this, 1, 'C')">
+                                C) The Church-Turing Thesis
+                            </div>
+                            <div class="quiz-option" onclick="selectOption(this, 1, 'D')">
+                                D) The Von Neumann Theorem
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>Question 2: Which control structure executes code one statement after another?</h4>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="selectOption(this, 2, 'A')">
+                                A) Selection
+                            </div>
+                            <div class="quiz-option" onclick="selectOption(this, 2, 'B')">
+                                B) Iteration
+                            </div>
+                            <div class="quiz-option" onclick="selectOption(this, 2, 'C')">
+                                C) Sequence
+                            </div>
+                            <div class="quiz-option" onclick="selectOption(this, 2, 'D')">
+                                D) Recursion
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>Question 3: What keyword in most languages implements the selection control structure?</h4>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="selectOption(this, 3, 'A')">
+                                A) while
+                            </div>
+                            <div class="quiz-option" onclick="selectOption(this, 3, 'B')">
+                                B) for
+                            </div>
+                            <div class="quiz-option" onclick="selectOption(this, 3, 'C')">
+                                C) if
+                            </div>
+                            <div class="quiz-option" onclick="selectOption(this, 3, 'D')">
+                                D) return
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>Question 4: Which control structure would you use to process all items in a shopping cart?</h4>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="selectOption(this, 4, 'A')">
+                                A) Sequence
+                            </div>
+                            <div class="quiz-option" onclick="selectOption(this, 4, 'B')">
+                                B) Selection
+                            </div>
+                            <div class="quiz-option" onclick="selectOption(this, 4, 'C')">
+                                C) Iteration
+                            </div>
+                            <div class="quiz-option" onclick="selectOption(this, 4, 'D')">
+                                D) None of these
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>Question 5: What makes iteration different from sequence?</h4>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="selectOption(this, 5, 'A')">
+                                A) Iteration executes code in reverse order
+                            </div>
+                            <div class="quiz-option" onclick="selectOption(this, 5, 'B')">
+                                B) Iteration repeats code while a condition is true
+                            </div>
+                            <div class="quiz-option" onclick="selectOption(this, 5, 'C')">
+                                C) Iteration only works with numbers
+                            </div>
+                            <div class="quiz-option" onclick="selectOption(this, 5, 'D')">
+                                D) Iteration is faster than sequence
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>Question 6: In the code <code>if (x > 10) { y = x * 2; } else { y = x / 2; }</code>, which structure is used?</h4>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="selectOption(this, 6, 'A')">
+                                A) Only Sequence
+                            </div>
+                            <div class="quiz-option" onclick="selectOption(this, 6, 'B')">
+                                B) Only Selection
+                            </div>
+                            <div class="quiz-option" onclick="selectOption(this, 6, 'C')">
+                                C) Selection and Sequence
+                            </div>
+                            <div class="quiz-option" onclick="selectOption(this, 6, 'D')">
+                                D) Iteration and Selection
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="submit-quiz" onclick="submitQuiz()">Submit Quiz</button>
+                    <div id="quiz-feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 CIT 120 Computational Thinking | Professor Claude</p>
+            <p>Empowering the next generation of programmers</p>
+        </footer>
+    </div>
+
+    <script>
+        // Navigation
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const sections = document.querySelectorAll('.section');
+
+        navButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetSection = button.getAttribute('data-section');
+                
+                navButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                sections.forEach(section => section.classList.remove('active'));
+                document.getElementById(targetSection).classList.add('active');
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Sequence Demo
+        function runSequenceDemo() {
+            const num1 = parseFloat(document.getElementById('seq-num1').value) || 0;
+            const num2 = parseFloat(document.getElementById('seq-num2').value) || 0;
+            const output = document.getElementById('sequence-output');
+            
+            let result = '';
+            result += 'STEP 1: Read first number: ' + num1 + '\n';
+            result += 'STEP 2: Read second number: ' + num2 + '\n';
+            result += 'STEP 3: Calculate sum: ' + num1 + ' + ' + num2 + ' = ' + (num1 + num2) + '\n';
+            result += 'STEP 4: Calculate product: ' + num1 + ' × ' + num2 + ' = ' + (num1 * num2) + '\n';
+            result += 'STEP 5: Calculate average: (' + num1 + ' + ' + num2 + ') / 2 = ' + ((num1 + num2) / 2) + '\n';
+            result += '\n✅ All steps executed in SEQUENCE (one after another)';
+            
+            output.textContent = result;
+        }
+
+        // Selection Demo
+        function runSelectionDemo() {
+            const age = parseInt(document.getElementById('age-input').value) || 0;
+            const output = document.getElementById('selection-output');
+            
+            let result = '';
+            result += '🔍 SELECTION PROCESS:\n\n';
+            result += 'Input: age = ' + age + '\n\n';
+            result += 'Checking condition: age >= 18\n';
+            result += 'Condition evaluates to: ' + (age >= 18) + '\n\n';
+            
+            if (age >= 18) {
+                result += '✅ TRUE PATH TAKEN:\n';
+                result += '   You are ' + age + ' years old.\n';
+                result += '   You ARE eligible to vote! 🗳️\n';
+            } else {
+                result += '❌ FALSE PATH TAKEN:\n';
+                result += '   You are ' + age + ' years old.\n';
+                const yearsUntil = 18 - age;
+                result += '   You can vote in ' + yearsUntil + ' year(s).\n';
+            }
+            
+            result += '\n💡 This demonstrates SELECTION - choosing different paths based on a condition.';
+            
+            output.textContent = result;
+        }
+
+        // Iteration Demo
+        function runIterationDemo() {
+            const count = parseInt(document.getElementById('loop-count').value) || 5;
+            const output = document.getElementById('iteration-output');
+            
+            if (count < 1 || count > 20) {
+                output.textContent = '⚠️ Please enter a number between 1 and 20';
+                return;
+            }
+            
+            let result = '';
+            result += '🔄 ITERATION PROCESS (Factorial Calculation):\n\n';
+            result += 'Calculating ' + count + '! (factorial)\n';
+            result += 'Formula: ' + count + '! = 1';
+            for (let i = 2; i <= count; i++) {
+                result += ' × ' + i;
+            }
+            result += '\n\n';
+            
+            let factorial = 1;
+            for (let i = 1; i <= count; i++) {
+                factorial *= i;
+                result += 'Iteration ' + i + ': factorial = ' + factorial + '\n';
+            }
+            
+            result += '\n✅ Loop completed after ' + count + ' iterations\n';
+            result += 'Final result: ' + count + '! = ' + factorial + '\n\n';
+            result += '💡 This demonstrates ITERATION - repeating code multiple times.';
+            
+            output.textContent = result;
+        }
+
+        // Code Analyzer
+        function analyzeCode() {
+            const select = document.getElementById('code-select');
+            const output = document.getElementById('analyzer-output');
+            const value = select.value;
+            
+            let analysis = '';
+            
+            switch(value) {
+                case 'example1':
+                    analysis = '📝 CODE: print("Hello World")\n\n';
+                    analysis += '🔍 ANALYSIS:\n';
+                    analysis += '✅ SEQUENCE: The statement executes once, in order\n';
+                    analysis += '❌ SELECTION: No conditions or branches\n';
+                    analysis += '❌ ITERATION: No loops or repetition\n\n';
+                    analysis += 'Verdict: This uses only SEQUENCE.';
+                    break;
+                    
+                case 'example2':
+                    analysis = '📝 CODE:\n';
+                    analysis += 'total = 0\n';
+                    analysis += 'for i in range(1, 6):\n';
+                    analysis += '    total = total + i\n\n';
+                    analysis += '🔍 ANALYSIS:\n';
+                    analysis += '✅ SEQUENCE: total = 0 executes once\n';
+                    analysis += '❌ SELECTION: No conditions\n';
+                    analysis += '✅ ITERATION: for loop repeats 5 times\n';
+                    analysis += '✅ SEQUENCE: Inside loop, total = total + i\n\n';
+                    analysis += 'Verdict: Uses SEQUENCE and ITERATION.';
+                    break;
+                    
+                case 'example3':
+                    analysis = '📝 CODE:\n';
+                    analysis += 'if age >= 18:\n';
+                    analysis += '    print("Adult")\n';
+                    analysis += 'else:\n';
+                    analysis += '    print("Minor")\n\n';
+                    analysis += '🔍 ANALYSIS:\n';
+                    analysis += '❌ ITERATION: No loops\n';
+                    analysis += '✅ SELECTION: if-else chooses between two paths\n';
+                    analysis += '✅ SEQUENCE: Each print executes sequentially\n\n';
+                    analysis += 'Verdict: Uses SELECTION and SEQUENCE.';
+                    break;
+                    
+                case 'example4':
+                    analysis = '📝 CODE:\n';
+                    analysis += 'count = 5\n';
+                    analysis += 'while count > 0:\n';
+                    analysis += '    if count % 2 == 0:\n';
+                    analysis += '        print("Even:", count)\n';
+                    analysis += '    else:\n';
+                    analysis += '        print("Odd:", count)\n';
+                    analysis += '    count = count - 1\n\n';
+                    analysis += '🔍 ANALYSIS:\n';
+                    analysis += '✅ SEQUENCE: count = 5\n';
+                    analysis += '✅ ITERATION: while loop repeats\n';
+                    analysis += '✅ SELECTION: if-else inside loop\n';
+                    analysis += '✅ SEQUENCE: print and count = count - 1\n\n';
+                    analysis += 'Verdict: Uses ALL THREE structures!';
+                    break;
+                    
+                default:
+                    analysis = 'Select an example above to analyze...';
+            }
+            
+            output.textContent = analysis;
+        }
+
+        // Quiz functionality
+        const quizAnswers = {
+            1: 'B',
+            2: 'C',
+            3: 'C',
+            4: 'C',
+            5: 'B',
+            6: 'C'
+        };
+
+        const selectedAnswers = {};
+
+        function selectOption(element, questionNum, answer) {
+            const options = element.parentElement.querySelectorAll('.quiz-option');
+            options.forEach(opt => {
+                opt.classList.remove('selected');
+                opt.classList.remove('correct');
+                opt.classList.remove('incorrect');
+            });
+            element.classList.add('selected');
+            selectedAnswers[questionNum] = answer;
+        }
+
+        function submitQuiz() {
+            let correct = 0;
+            let total = Object.keys(quizAnswers).length;
+            
+            for (let qNum in quizAnswers) {
+                const correctAnswer = quizAnswers[qNum];
+                const userAnswer = selectedAnswers[qNum];
+                
+                const question = document.querySelectorAll('.quiz-question')[qNum - 1];
+                const options = question.querySelectorAll('.quiz-option');
+                
+                options.forEach(opt => {
+                    const answerLetter = opt.textContent.trim()[0];
+                    if (answerLetter === correctAnswer) {
+                        opt.classList.add('correct');
+                    }
+                    if (answerLetter === userAnswer && userAnswer !== correctAnswer) {
+                        opt.classList.add('incorrect');
+                    }
+                });
+                
+                if (userAnswer === correctAnswer) {
+                    correct++;
+                }
+            }
+            
+            const percentage = Math.round((correct / total) * 100);
+            const feedback = document.getElementById('quiz-feedback');
+            
+            if (percentage >= 90) {
+                feedback.className = 'quiz-feedback correct';
+                feedback.innerHTML = `🎉 Excellent! You scored ${correct}/${total} (${percentage}%)<br>You have mastered the three control structures!`;
+            } else if (percentage >= 70) {
+                feedback.className = 'quiz-feedback correct';
+                feedback.innerHTML = `👍 Good job! You scored ${correct}/${total} (${percentage}%)<br>You understand the basics. Review the incorrect answers.`;
+            } else {
+                feedback.className = 'quiz-feedback incorrect';
+                feedback.innerHTML = `📚 You scored ${correct}/${total} (${percentage}%)<br>Review the lesson material and try again. You've got this!`;
+            }
+            
+            feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    </script>
+</body>
+</html>
