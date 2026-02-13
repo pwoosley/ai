@@ -230,6 +230,55 @@
     }
     .course .miniLinks a:hover{ transform: translateY(-1px); }
 
+    /* --- Lessons submenu styles --- */
+.miniLinks .dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.miniLinks .dropdown > button {
+  all: unset;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 700;
+  font-size: .92rem;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(0,0,0,.28);
+  border: 1px solid rgba(255,255,255,.14);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.miniLinks .dropdown > button:hover { transform: translateY(-1px); }
+
+.miniLinks .submenu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 280px;
+  padding: 8px;
+  z-index: 20;
+  background: rgba(17,24,39,.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.miniLinks .submenu a {
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+
+.miniLinks .dropdown[aria-expanded="true"] .submenu {
+  display: grid;
+  gap: 8px;
+}
+
     .resources ul{
       list-style: none;
       padding: 0;
@@ -372,10 +421,28 @@
             </div>
             <p>Decomposition, patterns, algorithms, data, and reasoning skills for every IT pathway.</p>
             <div class="miniLinks">
-              <a href="#" target="_blank" rel="noopener">Syllabus</a>
-              <a href="CIT120_control_structures_lesson.html" target="_blank" rel="noopener">Lessons</a>
+              <!-- Syllabus -->
+              <a href="syllabus.html" target="_blank" rel="noopener">Syllabus</a>
+            
+              <!-- Lessons submenu -->
+              <div class="dropdown" aria-expanded="false">
+                <button aria-haspopup="true" aria-expanded="false">
+                  Lessons ▾
+                </button>
+                <div class="submenu" role="menu" aria-label="CIT 120 Lessons">
+                  <a href="CIT120_control_structures_lesson.html" role="menuitem" target="_blank" rel="noopener">
+                    Week 6 — Decision Structures
+                  </a>
+                  <a href="CIT120_Logic_Breaker_Game.html" role="menuitem" target="_blank" rel="noopener">
+                    Interactive Assignment — Logic Breaker Game
+                  </a>
+                </div>
+              </div>
+            
+              <!-- Projects (leave as-is or wire later) -->
               <a href="#" target="_blank" rel="noopener">Projects</a>
             </div>
+            
           </article>
         </div>
       </section>
@@ -428,5 +495,29 @@
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
+<script>
+  // Lessons dropdown toggling
+  document.querySelectorAll('.miniLinks .dropdown > button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const parent = btn.parentElement;
+      const isOpen = parent.getAttribute('aria-expanded') === 'true';
+      // Close any other dropdowns
+      document.querySelectorAll('.miniLinks .dropdown')
+        .forEach(d => d.setAttribute('aria-expanded', 'false'));
+      parent.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+    });
+  });
+
+  // Click outside to close
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.miniLinks .dropdown')) {
+      document.querySelectorAll('.miniLinks .dropdown')
+        .forEach(d => d.setAttribute('aria-expanded', 'false'));
+      document.querySelectorAll('.miniLinks .dropdown > button')
+        .forEach(b => b.setAttribute('aria-expanded', 'false'));
+    }
+  });
+</script>
 </body>
 </html>
