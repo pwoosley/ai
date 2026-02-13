@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIT 120: Fixed Number Guessing Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --success: #22c55e;
+            --error: #ef4444;
+            --warning: #fbbf24;
+            --bg: #0f172a;
+            --card: #1e293b;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .game-card {
+            background: var(--card);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        h1 { margin-top: 0; font-size: 1.5rem; color: var(--primary); }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            background: rgba(0,0,0,0.2);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        input {
+            width: 80%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #334155;
+            background: #0f172a;
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            outline: none;
+        }
+
+        input:focus { border-color: var(--primary); }
+
+        button {
+            width: 85%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            background: var(--primary);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.1s, opacity 0.2s;
+            margin-bottom: 10px;
+        }
+
+        button:active { transform: scale(0.98); }
+        button:disabled { opacity: 0.3; cursor: not-allowed; }
+
+        #feedback {
+            margin-top: 1.5rem;
+            min-height: 1.5rem;
+            font-weight: 600;
+        }
+
+        .log {
+            margin-top: 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            text-align: left;
+            max-height: 100px;
+            overflow-y: auto;
+            border-top: 1px solid #334155;
+            padding-top: 10px;
+        }
+
+        .reset-btn {
+            background: transparent;
+            border: 1px solid #475569;
+            font-size: 0.8rem;
+            width: auto;
+            padding: 5px 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="game-card">
+    <h1>🔢 Logic Breaker</h1>
+    <p>CIT 120 Control Structure Demo</p>
+
+    <div class="stats">
+        <span>Attempts: <strong id="attempt-count">0</strong>/7</span>
+        <span>Goal: 1-100</span>
+    </div>
+
+    <input type="number" id="guess-input" placeholder="Enter Guess">
+    <br>
+    <button id="guess-btn">Submit Guess</button>
+    <br>
+    <button class="reset-btn" id="reset-btn">Restart System</button>
+
+    <div id="feedback">System Ready.</div>
+    <div class="log" id="game-log">> Waiting for input...</div>
+</div>
+
+<script>
+    // --- INITIALIZATION (Sequence) ---
+    let secret, attempts, maxAttempts;
+    
+    const inputField = document.getElementById('guess-input');
+    const guessBtn = document.getElementById('guess-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    const feedback = document.getElementById('feedback');
+    const log = document.getElementById('game-log');
+    const attemptDisplay = document.getElementById('attempt-count');
+
+    function initGame() {
+        secret = Math.floor(Math.random() * 100) + 1;
+        attempts = 0;
+        maxAttempts = 7;
+        
+        attemptDisplay.innerText = "0";
+        feedback.innerText = "New Number Generated.";
+        feedback.style.color = "white";
+        log.innerHTML = "> System rebooted.<br>> Target randomized.";
+        inputField.value = "";
+        inputField.disabled = false;
+        guessBtn.disabled = false;
+        inputField.focus();
+    }
+
+    // --- LOGIC ENGINE (Selection & Iteration) ---
+    function handleGuess() {
+        const guess = parseInt(inputField.value);
+
+        // 1. Selection: Input Validation
+        if (isNaN(guess) || guess < 1 || guess > 100) {
+            feedback.innerText = "Error: Invalid Range!";
+            feedback.style.color = "#ef4444"; // Fixed color reference
+            return;
+        }
+
+        attempts++;
+        attemptDisplay.innerText = attempts;
+
+        // 2. Selection: Win/Loss Logic
+        if (guess === secret) {
+            feedback.innerText = "🎉 Access Granted! You Win!";
+            feedback.style.color = "#22c55e";
+            endGame();
+        } else if (attempts >= maxAttempts) {
+            feedback.innerText = "System Locked. You Lose!";
+            feedback.style.color = "#ef4444";
+            log.innerHTML += `<br>> FAILED. The code was ${secret}`;
+            endGame();
+        } else {
+            // Hint Logic (Selection)
+            const hint = guess < secret ? "HIGHER" : "LOWER";
+            feedback.innerText = `${hint}!`;
+            feedback.style.color = "#fbbf24";
+            log.innerHTML += `<br>> Guess ${guess}: Try ${hint}`;
+        }
+
+        inputField.value = "";
+        inputField.focus();
+    }
+
+    function endGame() {
+        inputField.disabled = true;
+        guessBtn.disabled = true;
+    }
+
+    // --- EVENT LISTENERS (The Web "Iteration") ---
+    guessBtn.addEventListener('click', handleGuess);
+    
+    // Add "Enter" key support
+    inputField.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && !guessBtn.disabled) {
+            handleGuess();
+        }
+    });
+
+    resetBtn.addEventListener('click', initGame);
+
+    // Initial Start
+    initGame();
+</script>
+
+</body>
+</html>
